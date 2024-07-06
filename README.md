@@ -17,6 +17,12 @@ Gin adalah framework web untuk GO
 go get -u github.com/gin-gonic/gin
 ```
 
+## Installation Ait for Running GO
+Tools di mana aplikasi secara otomatis direstart saat file sumber diubah.
+```bash
+go install github.com/cosmtrek/air@latest
+```
+
 ## Installation GORM
 GORM adalah ORM (Object-Relational Mapping) untuk Go. Memetakan objek Go ke tabel database relasional.
 ```bash
