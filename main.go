@@ -1,6 +1,7 @@
 package main
 
 import (
+	"apps/controllers"
 	"apps/utils"
 
 	"github.com/gin-gonic/gin"
@@ -9,16 +10,14 @@ import (
 func main() {
 	utils.InitDB()
 	// Create a new Gin router instance
-	router := gin.Default()
+	r := gin.Default()
 
-	// Define a route for the root URL
-	router.GET("/", func(ctx *gin.Context) {
-		// Respond with a JSON message
-		ctx.JSON(200, gin.H{
-			"message": "Hello World",
-		})
-	})
+	r.GET("/users", controllers.GetUsers)
+	r.POST("/users", controllers.CreateUser)
+	r.GET("/users/:id", controllers.GetUser)
+	r.PUT("/users/:id", controllers.UpdateUser)
+	r.DELETE("/users/:id", controllers.DeleteUser)
 
 	// Start the server on port 8080
-	router.Run(":8080")
+	r.Run(":8080")
 }

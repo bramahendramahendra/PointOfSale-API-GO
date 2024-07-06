@@ -13,9 +13,13 @@ func CreateUser(user *models.User) error {
 	return config.DB.Create(user).Error
 }
 
-func GetUserByID(user *models.User, id string) error {
+func GetUserByID(user *models.User, id uint) error {
 	return config.DB.Where("id = ?", id).First(user).Error
 }
+
+// func Get()  {
+
+// }
 
 func UpdateUser(user *models.User) error {
 	return config.DB.Save(user).Error

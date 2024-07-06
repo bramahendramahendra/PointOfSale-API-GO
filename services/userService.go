@@ -15,11 +15,15 @@ func CreateUser(user models.User) error {
 	return repositories.CreateUser(&user)
 }
 
-func GetUserByID(id string) (models.User, error) {
+func GetUserByID(id uint) (models.User, error) {
 	var user models.User
 	err := repositories.GetUserByID(&user, id)
 	return user, err
 }
+
+// func GetUserByEmail(email stringg) (models.User, error) {
+// 	return repositories.Get
+// }
 
 func UpdateUser(user models.User) error {
 	return repositories.UpdateUser(&user)
