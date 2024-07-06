@@ -1,10 +1,13 @@
 package main
 
 import (
+	"apps/utils"
+
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	utils.InitDB()
 	// Create a new Gin router instance
 	router := gin.Default()
 
