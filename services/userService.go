@@ -21,9 +21,9 @@ func GetUserByID(id uint) (models.User, error) {
 	return user, err
 }
 
-// func GetUserByEmail(email stringg) (models.User, error) {
-// 	return repositories.Get
-// }
+func GetUserByEmail(email string) (models.User, error) {
+	return repositories.GetUserByEmail(email)
+}
 
 func UpdateUser(user models.User) error {
 	return repositories.UpdateUser(&user)
