@@ -1,7 +1,6 @@
 package utils
 
 import (
-	// "app/models"
 	"apps/config"
 	"log"
 
@@ -15,5 +14,4 @@ func InitDB() {
 	}
 
 	config.InitDB()
-	// config.DB.AutoMigrate(&models.User{})
 }
