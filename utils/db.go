@@ -2,6 +2,7 @@ package utils
 
 import (
 	"apps/config"
+	"apps/models"
 	"log"
 
 	"github.com/joho/godotenv"
@@ -14,4 +15,5 @@ func InitDB() {
 	}
 
 	config.InitDB()
+	config.DB.AutoMigrate(&models.User{})
 }
