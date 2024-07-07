@@ -16,7 +16,8 @@ func main() {
 	r.POST("/users", controllers.CreateUser)
 	r.GET("/users/:id", controllers.GetUser)
 	r.PUT("/users/:id", controllers.UpdateUser)
-	r.DELETE("/users/:id", controllers.DeleteUser)
+	r.DELETE("/users/Temporary/:id", controllers.DeleteUserTemporary)
+	r.DELETE("/users/Permanently/:id", controllers.DeleteUserPermanently)
 
 	// Start the server on port 8080
 	r.Run(":8080")

@@ -24,24 +24,17 @@ func CreateUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	// Check if the email already exists including soft deleted
+	// Memeriksa apakah email sudah ada termasuk yang soft deleted
 	existingUser, err := services.GetUserByEmail(user.Email)
-	if err == nil && existingUser.ID != 0 {
-		if existingUser.DeletedAt.Valid {
-			// If the existing user was soft deleted, hard delete it first
-			if err := services.HardDeleteUser(existingUser.ID); err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-				return
-			}
-		} else {
-			// If the email exists and was not soft deleted, return conflict
-			c.JSON(http.StatusConflict, gin.H{"error": "Email already exists"})
+	if err == nil && existingUser.ID != 0 && !existingUser.DeletedAt.Valid {
+		// Jika email ada dan tidak dihapus soft, kembalikan konflik
+		c.JSON(http.StatusConflict, gin.H{"error": "Email already exists"})
+		return
+	} else {
+		if err := services.CreateUser(user); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-	}
-	if err := services.CreateUser(user); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
 	}
 	c.JSON(http.StatusCreated, user)
 }
@@ -82,7 +75,7 @@ func UpdateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
-func DeleteUser(c *gin.Context) {
+func DeleteUserTemporary(c *gin.Context) {
 	id := c.Param("id")
 
 	// Konversi id dari string ke uint
@@ -91,7 +84,23 @@ func DeleteUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
 		return
 	}
-	if err := services.DeleteUser(uint(intID)); err != nil {
+	if err := services.SoftDeleteUser(uint(intID)); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusNoContent, nil)
+}
+
+func DeleteUserPermanently(c *gin.Context) {
+	id := c.Param("id")
+
+	// Konversi id dari string ke uint
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+	if err := services.HardDeleteUser(uint(intID)); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
