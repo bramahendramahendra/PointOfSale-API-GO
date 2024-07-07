@@ -26,11 +26,6 @@ func GetUserByEmail(user *models.User, email string) error {
 	return config.DB.Where("email = ?", email).First(&user).Error
 }
 
-// Get data user berdasarkan email temp
-func GetUserByEmailTemp(user *models.User, emailTemp string) error {
-	return config.DB.Where("email_temp = ?", emailTemp).First(&user).Error
-}
-
 // Update user
 func UpdateUser(user *models.User) error {
 	return config.DB.Save(user).Error

@@ -35,8 +35,12 @@ Driver MySQL untuk GORM
 go get -u gorm.io/driver/mysql
 ```
 
-## Running Go
+## Installation Swagger
+```bash
+go get -u github.com/go-swagger/go-swagger/cmd/swagger
+```
 
+## Running Go
 ```bash
 $ go run main.go
 ```

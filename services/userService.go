@@ -30,13 +30,6 @@ func GetUserByEmail(email string) (models.User, error) {
 	return user, err
 }
 
-// Get data user berdasarkan email temp
-func GetUserByEmailTemp(email string) (models.User, error) {
-	var user models.User
-	err := repositories.GetUserByEmail(&user, email)
-	return user, err
-}
-
 // Update user
 func UpdateUser(user models.User) error {
 	return repositories.UpdateUser(&user)
